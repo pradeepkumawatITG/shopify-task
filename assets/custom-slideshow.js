@@ -6,8 +6,9 @@ const nextBtn = document.getElementById('next');
 const slider = document.getElementById('slider');
 const show_counter = document.querySelector('.slide_counter');
 const mover_slider = slider.getAttribute('data-slide-move');
-// const autoSlideTrue = document.querySelector('.slider-nav');
-// const autoSlideValue = autoSlideTrue.getAttribute('data-auto-slide').trim();
+const autoSlideTrue = document.querySelector('.slider-nav');
+const autoSlideValue = autoSlideTrue.getAttribute('enable-autoslide');
+console.log(autoSlideValue);
 function showSlide(index) {
   if (index < 0) {
     currentSlide = slides.length - 1; 
@@ -19,7 +20,6 @@ function showSlide(index) {
   slider.style.transform = `translateX(-${currentSlide * 100}%)`;
   show_counter.innerHTML = `${index}/${slides.length}`;
   updateDots();
-//   console.log(mover_slider);
 }
 
 function updateDots() {
@@ -41,15 +41,13 @@ dots.forEach(dot => {
   });
 });
 
-// if(autoSlideValue){
+if(autoSlideValue == ' true' ){
     setInterval(() => {
-      showSlide(currentSlide + 1);  // Move to the next slide
+      showSlide(currentSlide + 1); 
     }, 3000); 
-// }
+}
 
 showSlide(currentSlide);
 
 
-
-// produtdd
 

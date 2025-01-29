@@ -69,21 +69,20 @@
               </div>
             </div>
           {% endif %}
-        {% when 'test' %}
-          <div class="slider-container ">
-            <div
-              class="slider grid product-grid grid--{{ block.settings.columns_desktop }}-col-desktop "
-              id="slider"
-              data-slide-move="{{ block.settings.columns_desktop }}"
-            >
-              {% for product in block.settings.collection.products %}
-                <div class="grid__item grid-slide">
-                  <img src="{{ product.featured_image | img_url:'master'}}" width="100%" height="100%">
-                </div>
-              {% endfor %}
-            </div>
+      {% when 'test' %}
+        {% if section.settings.sliderlayout == 'Product' %}
+          <div
+            class="product-slider grid--{{ block.settings.columns_desktop }}-col-desktop "
+            id="slider"
+            data-slide-move="{{ block.settings.columns_desktop }}"
+          >
+            {% for product in block.settings.collection.products %}
+              <div class="product-card">
+                <img src="{{ product.featured_image | img_url:'master'}}" width="100%" height="100%">
+              </div>
+            {% endfor %}
           </div>
-
+          {% endif %}
         {% else %}
 
       {% endcase %}
@@ -92,7 +91,8 @@
       </div>
       </div>
     {% endif %}
-    <div class="slider-nav" enable-autoslide="{% if section.settings.show_autoslide  %} ture{% endif %}">
+    {% if section.settings.sliderlayout == 'banner' %}
+    <div class="slider-nav" enable-autoslide="{% if section.settings.show_autoslide  %} true{% endif %}">
       <button class="prev" id="prev">
         <span class="svg-wrapper">{{ 'icon-caret.svg' | inline_asset_content }}</span>
       </button>
@@ -109,7 +109,13 @@
       <button class="next" id="next">
         <span class="svg-wrapper">{{ 'icon-caret.svg' | inline_asset_content }}</span>
       </button>
-    </div>0
+    </div>
+  {% else %}
+    <div class="product-grid-button  slider-nav">
+      <button class="slider-button left prev"> <span class="svg-wrapper">{{ 'icon-caret.svg' | inline_asset_content }}</span></button>
+      <button class="slider-button right next"><span class="svg-wrapper">{{ 'icon-caret.svg' | inline_asset_content }}</span></button>
+    </div>
+    {% endif %}
   </div>
 </div>
 
@@ -142,10 +148,6 @@
         {
           "value": "banner",
           "label": "Image Banner"
-        },
-        {
-          "value": "testimonials",
-          "label": "testimonials"
         },
         {
           "value": "Product",
@@ -462,21 +464,28 @@
         },
         {
           "type": "range",
-          "id": "products_to_show",
-          "min": 2,
-          "max": 25,
-          "step": 1,
-          "default": 4,
-          "label": "t:sections.featured-collection.settings.products_to_show.label"
-        },
-        {
-          "type": "range",
           "id": "columns_desktop",
           "min": 1,
-          "max": 6,
+          "max": 5,
           "step": 1,
           "default": 4,
           "label": "t:sections.featured-collection.settings.columns_desktop.label"
+        }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "testimonials",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading_title",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "paragraph",
+          "label": "Paragraph"
         }
       ]
     }
